@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="uk" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TikTok Script Builder — Інтерактивний конструктор вірусних сценаріїв</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              pink: '#ff0050',
+              cyan: '#00f2fe',
+              purple: '#7928CA',
+              dark: '#0e0e11',
+              card: '#18181c',
+              border: '#2a2a32',
+              input: '#22222b'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          boxShadow: {
+            'glow-pink': '0 0 20px rgba(255, 0, 80, 0.35)',
+            'glow-cyan': '0 0 20px rgba(0, 242, 254, 0.35)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #0e0e11;
+      color: #f3f4f6;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #ff0050 0%, #00f2fe 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .gradient-border {
+      position: relative;
+      border-radius: 1rem;
+      background: linear-gradient(135deg, #ff0050, #00f2fe);
+      padding: 1px;
+    }
+
+    .gradient-border-inner {
+      background: #18181c;
+      border-radius: calc(1rem - 1px);
+    }
+
+    /* Print styling */
+    @media print {
+      body {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .print-only {
+        display: block !important;
+      }
+      .card-print {
+        border: 1px solid #ccc !important;
+        background: #fff !important;
+        color: #000 !important;
+        box-shadow: none !important;
+      }
+      input, textarea {
+        border: 1px solid #999 !important;
+        background: #fff !important;
+        color: #000 !important;
+      }
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0e0e11;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2a2a32;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #ff0050;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-brand-pink selection:text-white antialiased">
+
+  <!-- Header Banner -->
+  <header class="border-b border-brand-border bg-brand-dark/80 backdrop-blur-md sticky top-0 z-40 no-print">
+    <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-pink to-brand-cyan flex items-center justify-center shadow-glow-pink">
+          <i class="fa-fab fa-tiktok text-black text-xl font-black"></i>
+        </div>
+        <span class="font-bold text-xl tracking-tight">TikTok<span class="gradient-text">Builder</span></span>
+      </div>
+      <div class="flex items-center space-x-3">
+        <button onclick="scrollToSection('script-builder')" class="bg-gradient-to-r from-brand-pink to-brand-cyan text-black font-bold px-4 py-2 rounded-xl text-sm transition-transform duration-200 active:scale-95 hover:opacity-90 shadow-glow-pink">
+          <i class="fa-solid fa-wand-magic-sparkles mr-1.5"></i> Створити Сценарій
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4 py-8 space-y-12 flex-grow w-full">
+
+    <!-- 1. Назва та Підзаголовок -->
+    <section class="text-center space-y-4 pt-4">
+      <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-brand-card border border-brand-border text-xs font-semibold text-brand-cyan mb-2">
+        <span class="flex h-2 w-2 rounded-full bg-brand-cyan animate-pulse"></span>
+        <span>Версія 2.0 • Інтерактивний генератор</span>
+      </div>
+      <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight">
+        TikTok <span class="gradient-text">Script Builder</span>
+      </h1>
+      <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto font-normal">
+        Інтерактивний конструктор вірусних сценаріїв для коротких відео у TikTok, Instagram Reels та YouTube Shorts.
+      </p>
+    </section>
+
+    <!-- 2. Опис Сервісу -->
+    <section class="bg-brand-card border border-brand-border rounded-2xl p-6 md:p-8 relative overflow-hidden shadow-xl">
+      <div class="absolute -right-12 -top-12 w-48 h-48 bg-brand-pink/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
+        <div class="space-y-2 max-w-2xl">
+          <h2 class="text-2xl font-bold flex items-center text-white">
+            <i class="fa-solid fa-bolt text-brand-pink mr-3"></i>Про сервіс
+          </h2>
+          <p class="text-gray-300 leading-relaxed">
+            Це простий та ефективний інструмент для контент-мейкерів, блогерів та бізнесів, який допомагає миттєво перетворювати сирі ідеї на чітко структуровані сценарії за випробуваною формулою утримання уваги глядача.
+          </p>
+        </div>
+        <div class="grid grid-cols-2 gap-3 w-full md:w-auto">
+          <div class="bg-brand-input border border-brand-border p-3 rounded-xl text-center">
+            <div class="text-brand-pink font-bold text-xl">3 сек</div>
+            <div class="text-xs text-gray-400">Хук для уваги</div>
+          </div>
+          <div class="bg-brand-input border border-brand-border p-3 rounded-xl text-center">
+            <div class="text-brand-cyan font-bold text-xl">x3-x5</div>
+            <div class="text-xs text-gray-400">Ріст охоплень</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Проблема & 4. Вирішення (2 стовпчики) -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- 3. Опис проблеми -->
+      <div class="bg-brand-card border-l-4 border-l-brand-pink border-t border-r border-b border-brand-border rounded-2xl p-6 shadow-lg">
+        <div class="flex items-center space-x-3 mb-4">
+          <div class="w-10 h-10 rounded-lg bg-brand-pink/10 flex items-center justify-center text-brand-pink">
+            <i class="fa-solid fa-triangle-exclamation text-xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white">3. Проблема творця</h3>
+        </div>
+        <ul class="space-y-3 text-gray-300 text-sm">
+          <li class="flex items-start">
+            <i class="fa-solid fa-xmark text-brand-pink mt-1 mr-2.5 shrink-0"></i>
+            <span>Відео втрачають до 80% глядачів вже на перших 3 секундах через слабкий початок.</span>
+          </li>
+          <li class="flex items-start">
+            <i class="fa-solid fa-xmark text-brand-pink mt-1 mr-2.5 shrink-0"></i>
+            <span>Автори витрачають години на вигадування тексту прямо під час зйомки.</span>
+          </li>
+          <li class="flex items-start">
+            <i class="fa-solid fa-xmark text-brand-pink mt-1 mr-2.5 shrink-0"></i>
+            <span>Відсутність чіткого заклику до дії (CTA) призводить до нульової конверсії та відсутності підписок.</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 4. Вирішення проблеми -->
+      <div class="bg-brand-card border-l-4 border-l-brand-cyan border-t border-r border-b border-brand-border rounded-2xl p-6 shadow-lg">
+        <div class="flex items-center space-x-3 mb-4">
+          <div class="w-10 h-10 rounded-lg bg-brand-cyan/10 flex items-center justify-center text-brand-cyan">
+            <i class="fa-solid fa-circle-check text-xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white">4. Наше рішення</h3>
+        </div>
+        <ul class="space-y-3 text-gray-300 text-sm">
+          <li class="flex items-start">
+            <i class="fa-solid fa-check text-brand-cyan mt-1 mr-2.5 shrink-0"></i>
+            <span>Розбиття сценарію на 3 золоті етапи: <strong>Хук → Суть → Заклик до дії</strong>.</span>
+          </li>
+          <li class="flex items-start">
+            <i class="fa-solid fa-check text-brand-cyan mt-1 mr-2.5 shrink-0"></i>
+            <span>Готові шаблони та генератор вірусних зачіпок для будь-якої ніші.</span>
+          </li>
+          <li class="flex items-start">
+            <i class="fa-solid fa-check text-brand-cyan mt-1 mr-2.5 shrink-0"></i>
+            <span>Інтерактивний чек-лист перед зйомкою, щоб жодна важлива деталь не була втрачена.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 5. Інструкція як користуватись сайтом -->
+    <section class="bg-brand-card border border-brand-border rounded-2xl p-6 md:p-8">
+      <h2 class="text-2xl font-bold mb-6 flex items-center text-white">
+        <i class="fa-solid fa-list-ol text-brand-cyan mr-3"></i>5. Як користуватись сайтом
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <div class="bg-brand-input border border-brand-border p-4 rounded-xl relative">
+          <div class="text-3xl font-black text-brand-pink/30 mb-2">01</div>
+          <h4 class="font-bold text-white mb-1 text-base">Тема відео</h4>
+          <p class="text-xs text-gray-400">Вкажіть коротку тему або головну ідею вашого майбутнього ролика.</p>
+        </div>
+
+        <div class="bg-brand-input border border-brand-border p-4 rounded-xl relative">
+          <div class="text-3xl font-black text-brand-cyan/30 mb-2">02</div>
+          <h4 class="font-bold text-white mb-1 text-base">Виберіть Хук</h4>
+          <p class="text-xs text-gray-400">Використайте підказку або придумайте зачіпку для перших 3 секунд.</p>
+        </div>
+
+        <div class="bg-brand-input border border-brand-border p-4 rounded-xl relative">
+          <div class="text-3xl font-black text-brand-pink/30 mb-2">03</div>
+          <h4 class="font-bold text-white mb-1 text-base">Суть та CTA</h4>
+          <p class="text-xs text-gray-400">Заповніть основні тези та заклик до дії (підписка, коментар, збереження).</p>
+        </div>
+
+        <div class="bg-brand-input border border-brand-border p-4 rounded-xl relative">
+          <div class="text-3xl font-black text-brand-cyan/30 mb-2">04</div>
+          <h4 class="font-bold text-white mb-1 text-base">Експорт</h4>
+          <p class="text-xs text-gray-400">Пройдіть чек-лист і скопіюйте текст або збережіть файл у PDF форматі.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 6. Інтерактивний Конструктор та Чек-лист -->
+    <section id="script-builder" class="gradient-border shadow-2xl">
+      <div class="gradient-border-inner p-6 md:p-8 space-y-8">
+        
+        <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-brand-border pb-6 gap-4">
+          <div>
+            <h2 class="text-2xl md:text-3xl font-black tracking-tight text-white flex items-center">
+              <i class="fa-solid fa-sliders text-brand-pink mr-3"></i>6. Конструктор сценарію
+            </h2>
+            <p class="text-sm text-gray-400 mt-1">Заповніть поля нижче, щоб сформувати ідеальний сценарій</p>
+          </div>
+          
+          <button onclick="fillExample()" class="text-xs bg-brand-input hover:bg-brand-border border border-brand-border text-gray-300 font-semibold px-3 py-2 rounded-lg transition">
+            <i class="fa-solid fa-lightbulb text-yellow-400 mr-1.5"></i> Заповнити прикладом
+          </button>
+        </div>
+
+        <!-- Поля форми -->
+        <div class="space-y-6">
+          
+          <!-- Назва / Тема -->
+          <div>
+            <label for="script-title" class="block text-sm font-semibold text-gray-200 mb-2">
+              <i class="fa-solid fa-heading text-brand-cyan mr-1.5"></i> Тема / Назва відео
+            </label>
+            <input type="text" id="script-title" placeholder="Наприклад: 3 таємні фічі VS Code, які збережуть час" 
+              class="w-full bg-brand-input border border-brand-border rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan transition">
+          </div>
+
+          <!-- 1. Хук з генератором -->
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <label for="script-hook" class="block text-sm font-semibold text-brand-pink">
+                <i class="fa-solid fa-fish-fins mr-1.5"></i> 1. Хук (Зачіпка — Перші 3 секунди)
+              </label>
+              <button onclick="generateHookIdea()" class="text-xs text-brand-cyan hover:underline flex items-center font-medium">
+                <i class="fa-solid fa-dice mr-1"></i> Згенерувати ідею
+              </button>
+            </div>
+            <textarea id="script-hook" rows="2" placeholder="«Перестаньте робіть цю помилку у 2026 році, якщо не хочете втратити гроші...»" 
+              class="w-full bg-brand-input border border-brand-border rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition"></textarea>
+          </div>
+
+          <!-- 2. Основна частина -->
+          <div>
+            <label for="script-body" class="block text-sm font-semibold text-gray-200 mb-2">
+              <i class="fa-solid fa-align-left text-brand-cyan mr-1.5"></i> 2. Основна частина (Головні тези та суть)
+            </label>
+            <textarea id="script-body" rows="4" placeholder="Пункт 1: Відкрийте налаштування і натисніть...&#10;Пункт 2: Увімкніть функцію...&#10;Пункт 3: Насолоджуйтесь результатом!" 
+              class="w-full bg-brand-input border border-brand-border rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-brand-cyan focus:ring-1 focus:ring-brand-cyan transition"></textarea>
+          </div>
+
+          <!-- 3. Заклик до дії (CTA) -->
+          <div>
+            <label for="script-cta" class="block text-sm font-semibold text-brand-pink mb-2">
+              <i class="fa-solid fa-bullhorn mr-1.5"></i> 3. Заклик до дії (Call to Action)
+            </label>
+            <input type="text" id="script-cta" placeholder="«Збережи це відео, щоб не загубити, та підпишись на канал!»" 
+              class="w-full bg-brand-input border border-brand-border rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition">
+          </div>
+
+        </div>
+
+        <!-- Чек-лист перед зйомкою з індикатором готовності -->
+        <div class="border-t border-brand-border pt-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-bold text-white flex items-center">
+              <i class="fa-solid fa-list-check text-brand-cyan mr-2"></i> Чек-лист готовності до зйомки
+            </h3>
+            <span id="progress-text" class="text-xs font-bold px-2.5 py-1 rounded-full bg-brand-input border border-brand-border text-brand-cyan">0% готово</span>
+          </div>
+
+          <!-- Шкала прогресу -->
+          <div class="w-full bg-brand-input rounded-full h-2.5 overflow-hidden border border-brand-border">
+            <div id="progress-bar" class="bg-gradient-to-r from-brand-pink to-brand-cyan h-2.5 rounded-full transition-all duration-300 w-0"></div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm pt-2">
+            <label class="flex items-center space-x-3 bg-brand-input/50 border border-brand-border p-3 rounded-xl cursor-pointer hover:bg-brand-input transition">
+              <input type="checkbox" onchange="updateProgress()" class="checklist-item w-4 h-4 rounded accent-brand-pink cursor-pointer">
+              <span class="text-gray-300">Динамічний хук до 3 секунд</span>
+            </label>
+            <label class="flex items-center space-x-3 bg-brand-input/50 border border-brand-border p-3 rounded-xl cursor-pointer hover:bg-brand-input transition">
+              <input type="checkbox" onchange="updateProgress()" class="checklist-item w-4 h-4 rounded accent-brand-pink cursor-pointer">
+              <span class="text-gray-300">Якісне світло та чіткий звук</span>
+            </label>
+            <label class="flex items-center space-x-3 bg-brand-input/50 border border-brand-border p-3 rounded-xl cursor-pointer hover:bg-brand-input transition">
+              <input type="checkbox" onchange="updateProgress()" class="checklist-item w-4 h-4 rounded accent-brand-pink cursor-pointer">
+              <span class="text-gray-300">Текст розраховано на 30-45 сек</span>
+            </label>
+            <label class="flex items-center space-x-3 bg-brand-input/50 border border-brand-border p-3 rounded-xl cursor-pointer hover:bg-brand-input transition">
+              <input type="checkbox" onchange="updateProgress()" class="checklist-item w-4 h-4 rounded accent-brand-pink cursor-pointer">
+              <span class="text-gray-300">Додано чіткий заклик (CTA)</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- 7. Фінальні дії (Кнопки) -->
+        <div class="border-t border-brand-border pt-6 flex flex-col sm:flex-row gap-4 no-print">
+          <button onclick="copyScript()" class="flex-1 bg-gradient-to-r from-brand-pink to-red-600 hover:opacity-95 text-white font-bold py-3.5 px-6 rounded-xl flex items-center justify-center space-x-2 transition-transform duration-150 active:scale-98 shadow-glow-pink">
+            <i class="fa-regular fa-copy text-lg"></i>
+            <span>Скопіювати сценарій</span>
+          </button>
+          
+          <button onclick="exportPDF()" class="flex-1 bg-gradient-to-r from-brand-cyan to-blue-500 hover:opacity-95 text-black font-bold py-3.5 px-6 rounded-xl flex items-center justify-center space-x-2 transition-transform duration-150 active:scale-98 shadow-glow-cyan">
+            <i class="fa-solid fa-file-pdf text-lg"></i>
+            <span>Зберегти в PDF</span>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-brand-border bg-brand-dark py-6 mt-12 no-print">
+    <div class="max-w-5xl mx-auto px-4 text-center text-xs text-gray-500 space-y-2">
+      <p>© 2026 TikTok Script Builder. Створено для швидкої генерації вірусного контенту.</p>
+      <p class="text-gray-600">Готовий файл index.html для публікації на GitHub Pages</p>
+    </div>
+  </footer>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="fixed bottom-6 right-6 bg-brand-cyan text-black px-5 py-3 rounded-xl shadow-2xl font-bold flex items-center space-x-2 translate-y-20 opacity-0 transition-all duration-300 z-50 pointer-events-none">
+    <i class="fa-solid fa-circle-check text-lg"></i>
+    <span id="toast-message">Сценарій успішно скопійовано!</span>
+  </div>
+
+  <script>
+    // Ідеї для хуків
+    const hookIdeas = [
+      "«Ви точно робите це неправильно... Ось як треба!»",
+      "«Нікому не кажи про цей секретний лайфхак...»",
+      "«Перестаньте витрачати гроші на це у 2026 році!»",
+      "«3 речі, які змінять твоє уявлення про [Тема]...»",
+      "«Як я зробив [Результат] всього за 5 хвилин?»",
+      "«Секретна фіча, про яку мовчать 90% фахівців...»"
+    ];
+
+    function generateHookIdea() {
+      const randomIndex = Math.floor(Math.random() * hookIdeas.length);
+      const hookInput = document.getElementById('script-hook');
+      hookInput.value = hookIdeas[randomIndex];
+      showToast("Нову ідею хуку додано!");
+    }
+
+    function fillExample() {
+      document.getElementById('script-title').value = "Як безкоштовно покращити якість фото за 10 секунд";
+      document.getElementById('script-hook').value = "Більшість людей видаляють ці розмиті фото, навіть не підозрюючи про цю фічу...";
+      document.getElementById('script-body').value = "1. Завантажте додаток або відкрийте сайт.\n2. Натисніть кнопку 'Покращити деталі'.\n3. Зачекайте 3 секунди й отримайте результат у 4K!";
+      document.getElementById('script-cta').value = "Збережи це відео та підпишись, щоб не втратити корисні фічі!";
+      
+      const checkboxes = document.querySelectorAll('.checklist-item');
+      checkboxes.forEach(cb => cb.checked = true);
+      updateProgress();
+      showToast("Заповнено тестовими даними!");
+    }
+
+    function updateProgress() {
+      const checkboxes = document.querySelectorAll('.checklist-item');
+      let checkedCount = 0;
+      checkboxes.forEach(cb => {
+        if (cb.checked) checkedCount++;
+      });
+
+      const percentage = Math.round((checkedCount / checkboxes.length) * 100);
+      const progressBar = document.getElementById('progress-bar');
+      const progressText = document.getElementById('progress-text');
+
+      progressBar.style.width = percentage + '%';
+      progressText.textContent = percentage + '% готово';
+
+      if (percentage === 100) {
+        progressText.className = "text-xs font-bold px-2.5 py-1 rounded-full bg-brand-pink text-white shadow-glow-pink";
+      } else {
+        progressText.className = "text-xs font-bold px-2.5 py-1 rounded-full bg-brand-input border border-brand-border text-brand-cyan";
+      }
+    }
+
+    function copyScript() {
+      const title = document.getElementById('script-title').value.trim() || 'Без назви';
+      const hook = document.getElementById('script-hook').value.trim() || 'Не заповнено';
+      const body = document.getElementById('script-body').value.trim() || 'Не заповнено';
+      const cta = document.getElementById('script-cta').value.trim() || 'Не заповнено';
+
+      const fullText = `🎬 СЦЕНАРІЙ ДЛЯ TIKTOK / REELS\n\n📌 ТЕМА: ${title}\n\n🪝 1. ХУК (Перші 3 секунди):\n${hook}\n\n📝 2. ОСНОВНА ЧАСТИНА:\n${body}\n\n📢 3. ЗАКЛИК ДО ДІЇ (CTA):\n${cta}\n\n--- Згенеровано в TikTok Script Builder ---`;
+
+      // Copying using fallback / execCommand for iFrame iframe context
+      const dummy = document.createElement("textarea");
+      document.body.appendChild(dummy);
+      dummy.value = fullText;
+      dummy.select();
+      document.execCommand("copy");
+      document.body.removeChild(dummy);
+
+      showToast("Сценарій скопійовано у буфер!");
+    }
+
+    function exportPDF() {
+      window.print();
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-message');
+      toastMsg.textContent = message;
+
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3000);
+    }
+
+    function scrollToSection(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  </script>
+</body>
+</html>
